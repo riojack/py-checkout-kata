@@ -7,4 +7,4 @@ class PriceModel:
         return self
 
     def look_up_price(self, product_name):
-        return self.__product_price_dict[product_name]
+        return self.__product_price_dict.get(product_name, 0.0)
