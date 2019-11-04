@@ -16,3 +16,12 @@ def test_should_return_zero_if_product_not_found():
     model = PriceModel()
 
     assert model.look_up_price('apple') == 0.0
+
+
+def test_should_overwrite_product_if_the_same_product_is_added_multiple_times():
+    model = PriceModel() \
+        .add('orange', 0.65) \
+        .add('orange', 0.58) \
+        .add('orange', 0.53)
+
+    assert model.look_up_price('orange') == 0.53
