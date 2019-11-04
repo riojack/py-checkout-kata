@@ -31,7 +31,7 @@ jobs:
           command: |
             . venv/bin/activate
             echo "Violations found:"
-            flake8 --count checkout tests
+            flake8 --count src tests
 
       - run:
           name: run tests
