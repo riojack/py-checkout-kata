@@ -1,4 +1,4 @@
-from checkout.price_model import PriceModel
+from src.checkout.price_model import PriceModel
 
 
 def test_should_save_and_load_pricing_information():
