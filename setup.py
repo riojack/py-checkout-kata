@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="py-checkout-kata-pkg-riojack", # Replace with your own username
+    name="py-checkout-kata-pkg-riojack",
     version="0.0.1",
     author="riojack",
     author_email="riojack@github.com",
