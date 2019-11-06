@@ -1,4 +1,5 @@
-from unittest.mock import patch
+import math
+from unittest.mock import patch, call
 
 from src.checkout.scanner import Scanner
 
@@ -26,6 +27,21 @@ class TestScanner:
         scanner = Scanner(self.price_model)
 
         assert scanner.scan('orange') == scanner
+
+    def test_should_query_pricing_model_for_each_item_scanned(self):
+        self.price_model.look_up_price.side_effect = [0.70, 2.87, 1.95]
+        scanner = Scanner(self.price_model)
+        total = scanner \
+            .scan('kiwi') \
+            .scan('pineapple') \
+            .scan('loaf of bread') \
+            .total()
+
+        self.__assert_called_with(self.price_model.look_up_price, 'kiwi')
+        self.__assert_called_with(self.price_model.look_up_price, 'pineapple')
+        self.__assert_called_with(self.price_model.look_up_price, 'loaf of bread')
+        assert math.isclose(total, 5.52, rel_tol=0.00001)
+
     @staticmethod
     def __assert_called_with(mock_calls, arg1):
-        assert mock_calls.call_args == [(arg1,)]
+        assert call(arg1) in mock_calls.call_args_list
