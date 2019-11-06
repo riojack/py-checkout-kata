@@ -21,6 +21,11 @@ class TestScanner:
         self.__assert_called_with(self.price_model.look_up_price, 'orange')
         assert total == 1.55
 
+    def test_scan_should_return_itself(self):
+        self.price_model.look_up_price.return_value = 1.55
+        scanner = Scanner(self.price_model)
+
+        assert scanner.scan('orange') == scanner
     @staticmethod
     def __assert_called_with(mock_calls, arg1):
         assert mock_calls.call_args == [(arg1,)]

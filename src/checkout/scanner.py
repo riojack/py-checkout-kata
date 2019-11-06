@@ -3,7 +3,7 @@ class Scanner:
         self.price_model = price_model
 
     def scan(self, item):
-        pass
+        return self
 
     def total(self):
         return self.price_model.look_up_price('orange')
