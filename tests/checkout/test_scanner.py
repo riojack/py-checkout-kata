@@ -14,31 +14,31 @@ class TestScanner:
         self.price_model_patcher.stop()
 
     def test_should_calculate_total_by_querying_pricing_model(self):
-        self.price_model.look_up_price.return_value = 1.55
+        self.price_model.look_up_product.return_value = 1.55
         total = Scanner(self.price_model) \
             .scan('orange') \
             .total()
 
-        self.__assert_called_with(self.price_model.look_up_price, 'orange')
+        self.__assert_called_with(self.price_model.look_up_product, 'orange')
         assert total == 1.55
 
     def test_scan_should_return_itself(self):
-        self.price_model.look_up_price.return_value = 1.55
+        self.price_model.look_up_product.return_value = 1.55
         scanner = Scanner(self.price_model)
 
         assert scanner.scan('orange') == scanner
 
     def test_should_query_pricing_model_for_each_item_scanned(self):
-        self.price_model.look_up_price.side_effect = [0.70, 2.87, 1.95]
+        self.price_model.look_up_product.side_effect = [0.70, 2.87, 1.95]
         total = Scanner(self.price_model) \
             .scan('kiwi') \
             .scan('pineapple') \
             .scan('loaf of bread') \
             .total()
 
-        self.__assert_called_with(self.price_model.look_up_price, 'kiwi')
-        self.__assert_called_with(self.price_model.look_up_price, 'pineapple')
-        self.__assert_called_with(self.price_model.look_up_price, 'loaf of bread')
+        self.__assert_called_with(self.price_model.look_up_product, 'kiwi')
+        self.__assert_called_with(self.price_model.look_up_product, 'pineapple')
+        self.__assert_called_with(self.price_model.look_up_product, 'loaf of bread')
         assert math.isclose(total, 5.52, rel_tol=0.00001)
 
     def test_items_scanned_should_return_a_list_of_the_items_scanned(self):
