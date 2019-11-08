@@ -11,8 +11,8 @@ class PriceModel:
 
 
 def sold_by_unit():
-    return "sold by unit"
+    return 'sold by unit'
 
 
 def sold_by_weight():
-    return "sold by weight"
+    return 'sold by weight'
