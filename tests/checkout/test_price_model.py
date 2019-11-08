@@ -19,7 +19,7 @@ def test_should_save_and_load_product_information_for_multiple_products():
     assert model.look_up_product('peanuts') == (3.25, sold_by_unit())
 
 
-def test_should_return_zero_if_product_not_found():
+def test_should_return_price_of_zero_as_sold_by_unit_if_product_not_found():
     model = PriceModel()
 
     assert model.look_up_product('apple') == (0.0, sold_by_unit())
