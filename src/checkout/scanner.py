@@ -11,7 +11,11 @@ class Scanner:
         return self
 
     def total(self):
-        return reduce(lambda accumulator, item: accumulator + self.price_model.look_up_product(item), self.items, 0)
+        return reduce(self.__total_calculation_reducer, self.items, 0)
 
     def items_scanned(self):
         return [x for x in self.items]
+
+    def __total_calculation_reducer(self, accumulator, current_item):
+        price, _ = self.price_model.look_up_product(current_item)
+        return accumulator + price

@@ -14,7 +14,7 @@ class TestScanner:
         self.price_model_patcher.stop()
 
     def test_should_calculate_total_by_querying_pricing_model(self):
-        self.price_model.look_up_product.return_value = 1.55
+        self.price_model.look_up_product.return_value = (1.55, 'dont care')
         total = Scanner(self.price_model) \
             .scan('orange') \
             .total()
@@ -23,13 +23,17 @@ class TestScanner:
         assert total == 1.55
 
     def test_scan_should_return_itself(self):
-        self.price_model.look_up_product.return_value = 1.55
+        self.price_model.look_up_product.return_value = (1.55, 'dont care')
         scanner = Scanner(self.price_model)
 
         assert scanner.scan('orange') == scanner
 
     def test_should_query_pricing_model_for_each_item_scanned(self):
-        self.price_model.look_up_product.side_effect = [0.70, 2.87, 1.95]
+        self.price_model.look_up_product.side_effect = [
+            (0.70, 'dont care'),
+            (2.87, 'dont care'),
+            (1.95, 'dont care')
+        ]
         total = Scanner(self.price_model) \
             .scan('kiwi') \
             .scan('pineapple') \
