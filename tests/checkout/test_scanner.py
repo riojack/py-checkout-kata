@@ -15,9 +15,9 @@ class TestScanner:
 
     def test_should_calculate_total_by_querying_pricing_model(self):
         self.price_model.look_up_price.return_value = 1.55
-        scanner = Scanner(self.price_model)
-        scanner.scan('orange')
-        total = scanner.total()
+        total = Scanner(self.price_model) \
+            .scan('orange') \
+            .total()
 
         self.__assert_called_with(self.price_model.look_up_price, 'orange')
         assert total == 1.55
@@ -30,8 +30,7 @@ class TestScanner:
 
     def test_should_query_pricing_model_for_each_item_scanned(self):
         self.price_model.look_up_price.side_effect = [0.70, 2.87, 1.95]
-        scanner = Scanner(self.price_model)
-        total = scanner \
+        total = Scanner(self.price_model) \
             .scan('kiwi') \
             .scan('pineapple') \
             .scan('loaf of bread') \
@@ -53,5 +52,5 @@ class TestScanner:
         assert 'spaghetti' in items_scanned
 
     @staticmethod
-    def __assert_called_with(mock_calls, arg1):
-        assert call(arg1) in mock_calls.call_args_list
+    def __assert_called_with(mock_calls, call_argument):
+        assert call(call_argument) in mock_calls.call_args_list
