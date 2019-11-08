@@ -1,7 +1,14 @@
 from src.checkout.price_model import PriceModel, sold_by_unit
 
 
-def test_should_save_and_load_product_information():
+def test_should_save_product_as_sold_by_unit_by_default():
+    model = PriceModel() \
+        .add_product('stick of gum', 0.95)
+
+    assert model.look_up_product('stick of gum') == (0.95, sold_by_unit())
+
+
+def test_should_save_and_load_product_information_for_multiple_products():
     model = PriceModel() \
         .add_product('candy bar', 0.85) \
         .add_product('carrot', 0.15) \
