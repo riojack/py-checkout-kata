@@ -42,6 +42,16 @@ class TestScanner:
         self.__assert_called_with(self.price_model.look_up_price, 'loaf of bread')
         assert math.isclose(total, 5.52, rel_tol=0.00001)
 
+    def test_items_scanned_should_return_a_list_of_the_items_scanned(self):
+        items_scanned = Scanner(self.price_model) \
+            .scan('kiwi') \
+            .scan('kiwi') \
+            .scan('spaghetti') \
+            .items_scanned()
+
+        assert items_scanned.count('kiwi') == 2
+        assert 'spaghetti' in items_scanned
+
     @staticmethod
     def __assert_called_with(mock_calls, arg1):
         assert call(arg1) in mock_calls.call_args_list
